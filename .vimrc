@@ -83,10 +83,14 @@ endfunction
 """""""""""""""""""
 "    setting
 """""""""""""""""""
+
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
   finish
 endif
+
+"https://stackoverflow.com/questions/11489428/how-to-make-vim-paste-from-and-copy-to-systems-clipboard
+set clipboard=unnamed
 
 "set leader
 let mapleader=","

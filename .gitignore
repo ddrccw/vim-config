@@ -1,0 +1,4 @@
+.vim/.netrwhist
+
+#install by Vundle
+.vim/bundle/tmux.vim
