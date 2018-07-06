@@ -164,6 +164,8 @@ set sessionoptions=blank,buffers,curdir,folds,help,options,tabpages,winsize,slas
 " zc close one folds under the cursor.
 " zC close all folds under ther cursor.
 set foldenable
+"http://vim.wikia.com/wiki/All_folds_open_when_opening_a_file
+set foldlevelstart=20 
 " manual  手工定义折叠
 " indent  更多的缩进表示更高级别的折叠
 " expr    用表达式来定义折叠
