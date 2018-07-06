@@ -1,7 +1,6 @@
 " Description:  used by myself 
 "
 " Maintainer:  ddrccw(ddrccw@gmail.com)	
-" Last change:  2016-08-05
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
@@ -30,6 +29,7 @@ Plugin 'VundleVim/Vundle.vim'
 " plugin on GitHub repo
 "Plugin 'tpope/vim-fugitive'
 Plugin 'keith/tmux.vim'
+Plugin 'scrooloose/nerdtree'
 "" plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
 "" Git plugin not hosted on GitHub
@@ -195,6 +195,11 @@ else
     let isCtagsExisted = IsFileExisted("D:/cygwin/bin/ctags.exe")
 endif
 
+
+"""""""""""""
+" for NERDTREE
+map <C-n> :NERDTreeToggle<CR>
+
 """"""""""""""
 " for ctags
 """"""""""""""
@@ -204,7 +209,7 @@ if isCtagsExisted == 1
 		let Tlist_Ctags_Cmd = '/usr/bin/ctags'
 	else                                   "设定windows系统中ctags程序的位置
 		let Tlist_Ctags_Cmd = 'D:/cygwin/bin/ctags.exe'
-	endif
+endif
 	let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
 	let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
 	nmap <leader>tl :TlistToggle<cr>        "taglist
@@ -227,6 +232,11 @@ if !has("unix")
 	set shellxquote=\"
 endif
 
+" for fzf
+if IsFileExisted("/usr/local/bin/fzf")
+	set rtp+=/usr/local/opt/fzf
+endif
+
 " when saving .vimrc, it takes effect automatically 
 autocmd! bufwritepost .vimrc source ~/.vimrc
 
@@ -234,7 +244,7 @@ autocmd! bufwritepost .vimrc source ~/.vimrc
 set backspace=indent,eol,start
 
 "if has("vms")
-"  set nobackup		" do not keep a backup file, use versions instead
+"  set nobackup                " do not keep a backup file, use versions instead
 "else
 "  set backup		" keep a backup file
 "endif
