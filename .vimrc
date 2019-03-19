@@ -119,6 +119,8 @@ set shiftwidth=4
 set softtabstop=4
 " tab 4
 set tabstop=4
+" Use expand tab to convert new tabs to spaces
+set expandtab
 set nobackup
 " auto change dir
 set autochdir
