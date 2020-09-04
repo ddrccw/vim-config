@@ -15,8 +15,33 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+
+""""""""""""""""
+"   function
+""""""""""""""""
+function! IsFileExisted(fname)
+	if has("unix")
+		if findfile(a:fname, ".;/usr/bin/;/usr/local/bin") == a:fname
+			return 1
+		else
+			return 0
+		endif
+	else
+		if findfile(a:fname, "D:/cygwin/bin") == a:fname
+			return 1
+		else
+			return 0
+		endif
+   endif
+endfunction
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
+" Add homebrew fzf to the vim path:
+let isFzfExisted = IsFileExisted("/usr/local/bin/fzf")
+if isFzfExisted == 1
+    set rtp+=/usr/local/bin/fzf
+endif
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -30,6 +55,10 @@ Plugin 'VundleVim/Vundle.vim'
 "Plugin 'tpope/vim-fugitive'
 Plugin 'keith/tmux.vim'
 Plugin 'scrooloose/nerdtree'
+if isFzfExisted == 1
+    " Add the fzf.vim plugin to wrap fzf:
+    Plugin 'junegunn/fzf.vim'
+endif
 "" plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
 "" Git plugin not hosted on GitHub
@@ -58,28 +87,6 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-
-
-""""""""""""""""
-"   function
-""""""""""""""""
-function! IsFileExisted(fname)
-	if has("unix")
-		if findfile(a:fname, ".;/usr/bin/;/usr/local/bin") == a:fname
-			return 1
-		else
-			return 0
-		endif
-	else
-		if findfile(a:fname, "D:/cygwin/bin") == a:fname
-			return 1
-		else
-			return 0
-		endif
-   endif
-endfunction
-
-
 
 """""""""""""""""""
 "    setting
