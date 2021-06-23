@@ -211,6 +211,8 @@ endif
 """""""""""""
 " for NERDTREE
 map <C-n> :NERDTreeToggle<CR>
+nmap <leader>j :NERDTreeFind<CR>
+let NERDTreeIgnore=['\.pyc$', '__pycache__[[dir]]']
 
 """"""""""""""
 " for ctags
