@@ -59,6 +59,8 @@ if isFzfExisted == 1
     " Add the fzf.vim plugin to wrap fzf:
     Plugin 'junegunn/fzf.vim'
 endif
+Plugin 'tpope/vim-fugitive'
+
 "" plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
 "" Git plugin not hosted on GitHub
@@ -130,7 +132,8 @@ set tabstop=4
 set expandtab
 set nobackup
 " auto change dir
-set autochdir
+" https://github.com/junegunn/fzf.vim/issues/856#issuecomment-895215783
+" set autochdir
 " when searching, ignore case except that a word contains more 
 " then one upper cases.
 set ignorecase
