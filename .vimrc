@@ -38,6 +38,13 @@ endfunction
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 " Add homebrew fzf to the vim path:
+let isCtagsExisted = 0
+if has("unix")
+    let isCtagsExisted = IsFileExisted("/usr/bin/ctags")
+else
+    let isCtagsExisted = IsFileExisted("D:/cygwin/bin/ctags.exe")
+endif
+
 let isFzfExisted = IsFileExisted("/usr/local/bin/fzf")
 if isFzfExisted == 1
     set rtp+=/usr/local/bin/fzf
@@ -60,6 +67,9 @@ if isFzfExisted == 1
     Plugin 'junegunn/fzf.vim'
 endif
 Plugin 'tpope/vim-fugitive'
+if isCtagsExisted == 1
+    Plugin 'taglist.vim'
+endif
 
 "" plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
@@ -193,7 +203,6 @@ set foldcolumn=1
 " set autowrap
 noremap <a-w> :exe &wrap==1 ? 'set nowrap' : 'set wrap' <cr>
 
-let isCtagsExisted = 0
 " edit .vimrc
 if has("unix")
     set fileformats=unix,dos,mac
@@ -201,14 +210,12 @@ if has("unix")
     let $VIMFILES = $HOME."/.vim"
 	set encoding=utf-8
 	set fileencodings=ucs-bom,utf-8,cp936,gb2312,gbk,gb18030,big5,euc-jp,euc-kr,latin1
-    let isCtagsExisted = IsFileExisted("/usr/bin/ctags")
 else
     set fileformats=dos,unix,mac
     nmap <leader>e :tabnew $VIM/_vimrc<cr>
     let $VIMFILES = $VIM."/vimfiles"
 	set encoding=gbk
 	set fileencodings=ucs-bom,utf-8,cp936,gb2312,gbk,gb18030,big5,euc-jp,euc-kr,latin1	
-    let isCtagsExisted = IsFileExisted("D:/cygwin/bin/ctags.exe")
 endif
 
 
@@ -224,7 +231,7 @@ let NERDTreeIgnore=['\.pyc$', '__pycache__[[dir]]']
 if isCtagsExisted == 1
 	set tags=tags;
 	if has("unix")                         "设定unix系统中ctags程序的位置
-		let Tlist_Ctags_Cmd = '/usr/bin/ctags'
+		let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
 	else                                   "设定windows系统中ctags程序的位置
 		let Tlist_Ctags_Cmd = 'D:/cygwin/bin/ctags.exe'
 endif
@@ -248,11 +255,6 @@ if !has("unix")
 	set shell=d:/cygwin/bin/bash
 	set shellcmdflag=--login\ -c
 	set shellxquote=\"
-endif
-
-" for fzf
-if IsFileExisted("/usr/local/bin/fzf")
-	set rtp+=/usr/local/opt/fzf
 endif
 
 " when saving .vimrc, it takes effect automatically 
