@@ -46,9 +46,6 @@ else
 endif
 
 let isFzfExisted = IsFileExisted("/usr/local/bin/fzf")
-if isFzfExisted == 1
-    set rtp+=/usr/local/bin/fzf
-endif
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -255,6 +252,10 @@ if !has("unix")
 	set shell=d:/cygwin/bin/bash
 	set shellcmdflag=--login\ -c
 	set shellxquote=\"
+endif
+
+if isFzfExisted == 1
+	set rtp+=/usr/local/opt/fzf
 endif
 
 " when saving .vimrc, it takes effect automatically 
