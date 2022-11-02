@@ -35,56 +35,44 @@ function! IsFileExisted(fname)
    endif
 endfunction
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
 " Add homebrew fzf to the vim path:
 let isCtagsExisted = 0
 if has("unix")
-    let isCtagsExisted = IsFileExisted("/usr/bin/ctags")
+    let isCtagsExisted = IsFileExisted("/usr/local/bin/ctags")
 else
     let isCtagsExisted = IsFileExisted("D:/cygwin/bin/ctags.exe")
 endif
 
 let isFzfExisted = IsFileExisted("/usr/local/bin/fzf")
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
+call plug#begin("~/.vim/bundle")
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
 "Plugin 'tpope/vim-fugitive'
-Plugin 'keith/tmux.vim'
-Plugin 'scrooloose/nerdtree'
+Plug 'keith/tmux.vim'
+Plug 'scrooloose/nerdtree'
 if isFzfExisted == 1
     " Add the fzf.vim plugin to wrap fzf:
-    Plugin 'junegunn/fzf.vim'
+    Plug 'junegunn/fzf.vim'
 endif
-Plugin 'tpope/vim-fugitive'
-if isCtagsExisted == 1
-    Plugin 'taglist.vim'
+Plug 'tpope/vim-fugitive'
+"if isCtagsExisted == 1
+"    Plug 'taglist.vim'
+"endif
+
+Plug 'Rykka/riv.vim'
+Plug 'tikhomirov/vim-glsl'
+
+let isYCMExisted = 0
+if has('python3')
+  let isYCMExisted = 1
+  Plug 'ycm-core/YouCompleteMe'
 endif
 
-"" plugin from http://vim-scripts.org/vim/scripts.html
-"Plugin 'L9'
-"" Git plugin not hosted on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-"" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-"" The sparkup vim script is in a subdirectory of this repo called vim.
-"" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-"" Install L9 and avoid a Naming conflict if you've already installed a
-"" different version somewhere else.
-"Plugin 'ascenator/L9', {'name': 'newL9'}
-Plugin 'Rykka/riv.vim'
-Plugin 'tikhomirov/vim-glsl'
+Plug 'lunarWatcher/auto-pairs'
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
+call plug#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -101,6 +89,16 @@ filetype plugin indent on    " required
 """""""""""""""""""
 "    setting
 """""""""""""""""""
+
+""""""""""""""""
+" YouCompleteMe
+""""""""""""""""
+if isYCMExisted == 1
+  nnoremap <leader>jd :YcmCompleter GoTo<CR>
+  let g:ycm_echo_current_diagnostic = 'virtual-text'
+  let g:ycm_update_diagnostics_in_insert_mode = 0
+  let g:ycm_autoclose_preview_window_after_completion = 1
+endif
 
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
@@ -131,11 +129,11 @@ set number
 " highlight current line
 set cursorline
 " << and >> 4
-set shiftwidth=4
+set shiftwidth=2
 " bkspace delete 4 sps
-set softtabstop=4
+set softtabstop=2
 " tab 4
-set tabstop=4
+set tabstop=2
 " Use expand tab to convert new tabs to spaces
 set expandtab
 set nobackup
@@ -215,6 +213,9 @@ else
 	set fileencodings=ucs-bom,utf-8,cp936,gb2312,gbk,gb18030,big5,euc-jp,euc-kr,latin1	
 endif
 
+"""""""""""""
+" vim-fugitive
+nmap <leader>gb :Git blame<cr>
 
 """""""""""""
 " for NERDTREE
@@ -231,7 +232,7 @@ if isCtagsExisted == 1
 		let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
 	else                                   "设定windows系统中ctags程序的位置
 		let Tlist_Ctags_Cmd = 'D:/cygwin/bin/ctags.exe'
-endif
+  endif
 	let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
 	let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
 	nmap <leader>tl :TlistToggle<cr>        "taglist
@@ -256,6 +257,7 @@ endif
 
 if isFzfExisted == 1
 	set rtp+=/usr/local/opt/fzf
+    nmap <leader>f :Files<cr>
 endif
 
 " when saving .vimrc, it takes effect automatically 
