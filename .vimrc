@@ -69,7 +69,9 @@ if has('python3')
   Plug 'ycm-core/YouCompleteMe'
 endif
 
-Plug 'lunarWatcher/auto-pairs'
+"Plug 'lunarWatcher/auto-pairs'
+Plug 'tenfyzhong/CompleteParameter.vim'
+Plug 'alpertuna/vim-header'
 
 " All of your Plugins must be added before the following line
 call plug#end()            " required
@@ -91,6 +93,14 @@ filetype plugin indent on    " required
 """""""""""""""""""
 
 """"""""""""""""
+" vim-header
+""""""""""""""""
+let g:header_field_modified_timestamp = 0
+let g:header_field_author = 'ddrccw'
+let g:header_field_modified_by = 0
+
+
+""""""""""""""""
 " YouCompleteMe
 """"""""""""""""
 if isYCMExisted == 1
@@ -99,6 +109,14 @@ if isYCMExisted == 1
   let g:ycm_update_diagnostics_in_insert_mode = 0
   let g:ycm_autoclose_preview_window_after_completion = 1
 endif
+
+"" CompleteParameter.vim
+inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+
 
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
