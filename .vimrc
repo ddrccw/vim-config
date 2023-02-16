@@ -69,10 +69,20 @@ if has('python3')
   Plug 'ycm-core/YouCompleteMe'
 endif
 
+Plug 'dense-analysis/ale'
+
+
 "Plug 'lunarWatcher/auto-pairs'
 Plug 'tenfyzhong/CompleteParameter.vim'
 Plug 'alpertuna/vim-header'
+Plug 'drmikehenry/vim-headerguard'
 
+" Install vim-codefmt and its dependencies
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+" Install this plugin:
+Plug 'https://gn.googlesource.com/gn', { 'rtp': 'misc/vim' }
+ 
 " All of your Plugins must be added before the following line
 call plug#end()            " required
 filetype plugin indent on    " required
@@ -104,11 +114,23 @@ let g:header_field_modified_by = 0
 " YouCompleteMe
 """"""""""""""""
 if isYCMExisted == 1
-  nnoremap <leader>jd :YcmCompleter GoTo<CR>
+  "nnoremap <leader>jd :YcmCompleter GoTo<CR>
   let g:ycm_echo_current_diagnostic = 'virtual-text'
   let g:ycm_update_diagnostics_in_insert_mode = 0
   let g:ycm_autoclose_preview_window_after_completion = 1
 endif
+
+""""""""""""""""
+" ale
+""""""""""""""""
+" Write this in your vimrc file
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
+" You can disable this option too
+" if you don't want linters to run on opening a file
+let g:ale_lint_on_enter = 0
+nmap <leader>gd :ALEGoToDefinition<CR>
+
 
 "" CompleteParameter.vim
 inoremap <silent><expr> ( complete_parameter#pre_complete("()")
