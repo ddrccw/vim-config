@@ -48,20 +48,21 @@ call plug#begin("~/.vim/bundle")
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
-"Plugin 'tpope/vim-fugitive'
+
+" 辅助工具加强
 Plug 'keith/tmux.vim'
 Plug 'scrooloose/nerdtree'
+
 if isFzfExisted == 1
     " Add the fzf.vim plugin to wrap fzf:
     Plug 'junegunn/fzf.vim'
 endif
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'   "git
 "if isCtagsExisted == 1
 "    Plug 'taglist.vim'
 "endif
 
 Plug 'Rykka/riv.vim'
-Plug 'tikhomirov/vim-glsl'
 
 let isYCMExisted = 0
 if has('python3')
@@ -72,17 +73,24 @@ endif
 Plug 'dense-analysis/ale'
 
 
+" 编辑器增强
 "Plug 'lunarWatcher/auto-pairs'
 Plug 'tenfyzhong/CompleteParameter.vim'
 Plug 'alpertuna/vim-header'
 Plug 'drmikehenry/vim-headerguard'
+Plug 'tpope/vim-surround'
+Plug 'preservim/nerdcommenter'
+Plug 'tpope/vim-unimpaired'
 
+" 高亮相关
 " Install vim-codefmt and its dependencies
 Plug 'google/vim-maktaba'
 Plug 'google/vim-codefmt'
 " Install this plugin:
 Plug 'https://gn.googlesource.com/gn', { 'rtp': 'misc/vim' }
- 
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'tikhomirov/vim-glsl'
+
 " All of your Plugins must be added before the following line
 call plug#end()            " required
 filetype plugin indent on    " required
@@ -114,10 +122,28 @@ let g:header_field_modified_by = 0
 " YouCompleteMe
 """"""""""""""""
 if isYCMExisted == 1
-  "nnoremap <leader>jd :YcmCompleter GoTo<CR>
+  nnoremap <leader>yd :YcmCompleter GoTo<CR>
+  nnoremap <leader>yr :YcmRestartServer<CR>
+  nnoremap <leader>yf :YcmCompleter FixIt<CR>
+  " alt+o
+  nmap ø <Plug>(YCMFindSymbolInWorkspace)
+  " alt+d
+  nmap ∂ <Plug>(YCMFindSymbolInDocument)
   let g:ycm_echo_current_diagnostic = 'virtual-text'
+  let g:ycm_add_preview_to_completeopt = 0
+  set completeopt=menu,menuone
   let g:ycm_update_diagnostics_in_insert_mode = 0
   let g:ycm_autoclose_preview_window_after_completion = 1
+  let g:ycm_key_invoke_completion = '<c-z>'
+  let g:ycm_min_num_identifier_candidate_chars = 2
+  let g:ycm_semantic_triggers =  {
+        \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+        \ 'cs,lua,javascript': ['re!\w{2}'],
+        \ }
+  let g:ycm_show_diagnostics_ui = 0
+  let g:ycm_collect_identifiers_from_comments_and_strings = 1
+  let g:ycm_auto_hover=''
+  " let g:ycm_key_list_stop_completion = ['<C-y>', '<kEnter>']
 endif
 
 """"""""""""""""
@@ -129,8 +155,14 @@ let g:ale_lint_on_insert_leave = 0
 " You can disable this option too
 " if you don't want linters to run on opening a file
 let g:ale_lint_on_enter = 0
-nmap <leader>gd :ALEGoToDefinition<CR>
-
+let g:ale_virtualtext_cursor = 0
+let g:ale_hover_to_floating_preview = 1
+nmap <leader>td :ALEGoToDefinition<CR>
+" alt+t
+nmap † :ALEGoToDefinition<CR>
+" alt+h
+nmap ˙ :ALEHover<CR>
+let g:ale_set_balloons = 0
 
 "" CompleteParameter.vim
 inoremap <silent><expr> ( complete_parameter#pre_complete("()")
@@ -139,6 +171,12 @@ imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
 smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 
+""""""""""""""""""
+"  nerdcommenter
+""""""""""""""""""
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCommentEmptyLines = 1
 
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
@@ -151,6 +189,9 @@ set clipboard=unnamed
 "set leader
 let mapleader=","
 let g:mapleader=","
+
+" vim-unimpaired ]f , ignore some files with these suffixes
+set suffixes+=.DS_Store,.gif,.jpg,.jpeg,.png,.swo,.bak,~,.o,.swp,.obj
 
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
@@ -262,6 +303,7 @@ nmap <leader>gb :Git blame<cr>
 map <C-n> :NERDTreeToggle<CR>
 nmap <leader>j :NERDTreeFind<CR>
 let NERDTreeIgnore=['\.pyc$', '__pycache__[[dir]]']
+" let g:NERDTreeMinimalMenu=1
 
 """"""""""""""
 " for ctags
