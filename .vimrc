@@ -81,6 +81,7 @@ Plug 'drmikehenry/vim-headerguard'
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdcommenter'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-obsession'
 
 " 高亮相关
 " Install vim-codefmt and its dependencies
@@ -122,9 +123,9 @@ let g:header_field_modified_by = 0
 " YouCompleteMe
 """"""""""""""""
 if isYCMExisted == 1
-  nnoremap <leader>yd :YcmCompleter GoTo<CR>
-  nnoremap <leader>yr :YcmRestartServer<CR>
-  nnoremap <leader>yf :YcmCompleter FixIt<CR>
+  nnoremap <leader>cd :YcmCompleter GoTo<CR>
+  nnoremap <leader>cr :YcmRestartServer<CR>
+  nnoremap <leader>cf :YcmCompleter FixIt<CR>
   " alt+o
   nmap ø <Plug>(YCMFindSymbolInWorkspace)
   " alt+d
@@ -158,8 +159,9 @@ let g:ale_lint_on_enter = 0
 let g:ale_virtualtext_cursor = 0
 let g:ale_hover_to_floating_preview = 1
 nmap <leader>td :ALEGoToDefinition<CR>
-" alt+t
-nmap † :ALEGoToDefinition<CR>
+nmap <leader>tr :ALEDisable<CR> :ALEEnable<CR>
+" alt+z
+nmap Ω :ALEGoToDefinition<CR>
 " alt+h
 nmap ˙ :ALEHover<CR>
 let g:ale_set_balloons = 0
@@ -178,6 +180,13 @@ let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDCommentEmptyLines = 1
 
+""""""""""""""""""
+"  vim-obsession
+""""""""""""""""""
+" alt+s
+nmap ß :Obsession<CR>
+
+au BufRead,BufNewFile *.metal setfiletype metal
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
   finish
