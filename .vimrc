@@ -43,7 +43,6 @@ else
     let isCtagsExisted = IsFileExisted("D:/cygwin/bin/ctags.exe")
 endif
 
-let isFzfExisted = IsFileExisted("/usr/local/bin/fzf")
 call plug#begin("~/.vim/bundle")
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -53,10 +52,9 @@ call plug#begin("~/.vim/bundle")
 Plug 'keith/tmux.vim'
 Plug 'scrooloose/nerdtree'
 
-if isFzfExisted == 1
-    " Add the fzf.vim plugin to wrap fzf:
-    Plug 'junegunn/fzf.vim'
-endif
+" Add the fzf.vim plugin to wrap fzf:
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'   "git
 "if isCtagsExisted == 1
 "    Plug 'taglist.vim'
@@ -82,6 +80,7 @@ Plug 'tpope/vim-surround'
 Plug 'preservim/nerdcommenter'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-obsession'
+Plug 'Exafunction/codeium.vim', { 'branch': 'main' }
 
 " 高亮相关
 " Install vim-codefmt and its dependencies
@@ -118,14 +117,13 @@ let g:header_field_modified_timestamp = 0
 let g:header_field_author = 'ddrccw'
 let g:header_field_modified_by = 0
 
-
 """"""""""""""""
 " YouCompleteMe
 """"""""""""""""
 if isYCMExisted == 1
-  nnoremap <leader>cd :YcmCompleter GoTo<CR>
-  nnoremap <leader>cr :YcmRestartServer<CR>
-  nnoremap <leader>cf :YcmCompleter FixIt<CR>
+  map <leader>cd :YcmCompleter GoTo<CR>
+  map <leader>cr :YcmRestartServer<CR>
+  map <leader>cf :YcmCompleter FixIt<CR>
   " alt+o
   nmap ø <Plug>(YCMFindSymbolInWorkspace)
   " alt+d
@@ -158,8 +156,8 @@ let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_enter = 0
 let g:ale_virtualtext_cursor = 0
 let g:ale_hover_to_floating_preview = 1
-nmap <leader>td :ALEGoToDefinition<CR>
-nmap <leader>tr :ALEDisable<CR> :ALEEnable<CR>
+map <leader>td :ALEGoToDefinition<CR>
+map <leader>tr :ALEDisable<CR> :ALEEnable<CR>
 " alt+z
 nmap Ω :ALEGoToDefinition<CR>
 " alt+h
@@ -306,6 +304,8 @@ endif
 """""""""""""
 " vim-fugitive
 nmap <leader>gb :Git blame<cr>
+" alt+g
+nmap © :Git blame<CR>
 
 """""""""""""
 " for NERDTREE
@@ -346,10 +346,8 @@ if !has("unix")
 	set shellxquote=\"
 endif
 
-if isFzfExisted == 1
-	set rtp+=/usr/local/opt/fzf
-    nmap <leader>f :Files<cr>
-endif
+# fzf
+nmap <leader>f :Files<cr>
 
 " when saving .vimrc, it takes effect automatically 
 autocmd! bufwritepost .vimrc source ~/.vimrc
