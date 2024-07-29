@@ -346,7 +346,7 @@ if !has("unix")
 	set shellxquote=\"
 endif
 
-# fzf
+" fzf
 nmap <leader>f :Files<cr>
 
 " when saving .vimrc, it takes effect automatically 
