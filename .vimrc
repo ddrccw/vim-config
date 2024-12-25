@@ -51,6 +51,7 @@ call plug#begin("~/.vim/bundle")
 " 辅助工具加强
 Plug 'keith/tmux.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 " Add the fzf.vim plugin to wrap fzf:
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -412,6 +413,11 @@ if has("autocmd")
     \ if line("'\"") > 1 && line("'\"") <= line("$") |
     \   exe "normal! g`\"" |
     \ endif
+
+  " Set tab and indentation settings for Python
+  autocmd FileType python setlocal tabstop=2
+  autocmd FileType python setlocal shiftwidth=2
+  autocmd FileType python setlocal softtabstop=2
 
   augroup END
 
