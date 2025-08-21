@@ -74,14 +74,14 @@ Plug 'dense-analysis/ale'
 
 " 编辑器增强
 "Plug 'lunarWatcher/auto-pairs'
-Plug 'tenfyzhong/CompleteParameter.vim'
 Plug 'alpertuna/vim-header'
 Plug 'drmikehenry/vim-headerguard'
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdcommenter'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-obsession'
-Plug 'Exafunction/codeium.vim', { 'branch': 'main' }
+Plug 'Exafunction/windsurf.vim', { 'branch': 'main' }
+" Plug 'augmentcode/augment.vim'
 
 " 高亮相关
 " Install vim-codefmt and its dependencies
@@ -164,13 +164,6 @@ nmap Ω :ALEGoToDefinition<CR>
 " alt+h
 nmap ˙ :ALEHover<CR>
 let g:ale_set_balloons = 0
-
-"" CompleteParameter.vim
-inoremap <silent><expr> ( complete_parameter#pre_complete("()")
-smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 
 """"""""""""""""""
 "  nerdcommenter
